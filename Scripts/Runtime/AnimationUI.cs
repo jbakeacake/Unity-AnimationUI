@@ -81,7 +81,7 @@ namespace Unity_AnimationUI.Scripts.Runtime
         [ContextMenu("Stop Animation")]
         public void Stop()
         {
-            foreach (Coroutine coroutine in this._coroutines) this.StopCoroutine(coroutine);
+            foreach (Coroutine coroutine in this._coroutines.FindAll(x => x != null)) this.StopCoroutine(coroutine);
             this.IsAnimationPlaying = false;
             this._coroutines.Clear();
         }
