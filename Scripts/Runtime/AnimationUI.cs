@@ -265,7 +265,6 @@ namespace Unity_AnimationUI.Scripts.Runtime
             while (timeCompleted <= 1)
             {
                 timeCompleted = Mathf.Clamp((Time.time - startTime) / this.TotalDuration, 0, 2);
-                Debug.Log($"Animation Time Completed = {timeCompleted}");
                 yield return null;
             }
 
