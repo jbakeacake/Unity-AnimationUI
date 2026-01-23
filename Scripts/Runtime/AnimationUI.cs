@@ -77,7 +77,7 @@ namespace Unity_AnimationUI.Scripts.Runtime
 
         public bool IsPlaying()
         {
-            return this.CurrentTime >= this.TotalDuration;
+            return this.CurrentTime < this.TotalDuration;
         }
 
 
