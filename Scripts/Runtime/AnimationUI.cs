@@ -259,12 +259,18 @@ namespace Unity_AnimationUI.Scripts.Runtime
                 }
             }
 
-            yield return new WaitUntil(() => this.AnimationSequence.All(s => s.IsDone));
+            // Wait for all animations to finish:
+            float startTime = Time.time;
+            float timeCompleted = (Time.time - startTime) / this.TotalDuration;
+            while (timeCompleted <= 1)
+            {
+                timeCompleted = Mathf.Clamp((Time.time - startTime) / this.TotalDuration, 0, 2);
+                Debug.Log($"Animation Time Completed = {timeCompleted}");
+                yield return null;
+            }
 
             this.IsAnimationPlaying = false;
             this.OnAnimationEnded?.Invoke(); // Function to call at end
-
-            // OnAnimationEnded = null;
 
             this.atTimeEvents.Clear();
             this.atTimes.Clear();
@@ -452,6 +458,15 @@ namespace Unity_AnimationUI.Scripts.Runtime
                 {
                     sequence.Event?.Invoke();
                 }
+            }
+
+            // Wait for all animations to finish:
+            float startTime = Time.time;
+            float timeCompleted = (Time.time - startTime) / this.TotalDuration;
+            while (timeCompleted <= 1)
+            {
+                timeCompleted = Mathf.Clamp((Time.time - startTime) / this.TotalDuration, 0, 2);
+                yield return null;
             }
 
             this.OnAnimationEnded?.Invoke(); //Function to call at end
