@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -74,12 +75,6 @@ namespace Unity_AnimationUI.Scripts.Runtime
             this.Stop();
             this._coroutines.Add(this.StartCoroutine(this.PlayReversedAnimation()));
         }
-
-        public bool IsPlaying()
-        {
-            return this.CurrentTime < this.TotalDuration;
-        }
-
 
         List<Coroutine> _coroutines = new List<Coroutine>();
 
@@ -264,10 +259,13 @@ namespace Unity_AnimationUI.Scripts.Runtime
                 }
             }
 
-            this.OnAnimationEnded?.Invoke(); // Function to call at end
+            yield return new WaitUntil(() => this.AnimationSequence.All(s => s.IsDone));
+
             this.IsAnimationPlaying = false;
+            this.OnAnimationEnded?.Invoke(); // Function to call at end
 
             // OnAnimationEnded = null;
+
             this.atTimeEvents.Clear();
             this.atTimes.Clear();
         }
