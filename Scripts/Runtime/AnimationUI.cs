@@ -75,6 +75,11 @@ namespace Unity_AnimationUI.Scripts.Runtime
             this._coroutines.Add(this.StartCoroutine(this.PlayReversedAnimation()));
         }
 
+        public bool IsPlaying()
+        {
+            return this.CurrentTime >= this.TotalDuration;
+        }
+
 
         List<Coroutine> _coroutines = new List<Coroutine>();
 
